@@ -44,7 +44,7 @@ CREATE TABLE "Submission" (
     "User_id" bigint NOT NULL,
     created_time timestamp with time zone DEFAULT now() NOT NULL,
     updated_time timestamp with time zone DEFAULT now() NOT NULL,
-    data json NOT NULL
+    data text NOT NULL
 );
 
 
