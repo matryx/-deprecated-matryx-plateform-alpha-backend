@@ -2,6 +2,7 @@
 var bodyParser = require('body-parser')
 var cors = require('cors');
 
+var config = require("./config.js");
 var express = require("express");
 var app = express();
 
@@ -44,8 +45,8 @@ api.post = function (route, next) {
 };
 
 api.start = function () {
-    app.listen(8081, function () {
-        console.log("Listening on port 8081");
+    app.listen(config.port, function () {
+        console.log("Listening on port: ", config.port);
     });
 };
 

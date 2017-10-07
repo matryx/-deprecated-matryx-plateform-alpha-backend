@@ -2,14 +2,16 @@
 var sha1 = require('sha1');
 var moment = require("moment");
 
+var config = require("./config.js");
+
 var knex = require('knex')({
   client: 'pg',
   connection: {
-    host: 'localhost',
-    port: 5433,
-    user: 'leo', // Those are dummy, not actually used
-    password: '', // Those are dummy, not actually used
-    database: 'matryx-test', // Those are dummy, not actually used
+    host: config.pg.host,
+    port: config.pg.port,
+    user: config.pg.user,
+    password: config.pg.password,
+    database: config.pg.database,
   },
 });
 

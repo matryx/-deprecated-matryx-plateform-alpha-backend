@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "local": "cp config-local.js config.js",
+    "start": "node index.js",
     "api": "node index.js"
   },
   "repository": {
