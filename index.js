@@ -54,12 +54,12 @@ api.post('/upload', function (req, next) {
     var token2 = req.query.token || "";
     var title = req.body.title;
     var desc = req.body.desc;
-    var content = req.body.content;
+    var data = req.body.data;
     sql.session(token || token2, function (success, user, error) {
         if (!success) {
             return next(false, null, error);
         }
-        sql.upload(user.id, title, desc, content, next);
+        sql.upload(user.id, title, desc, data, next);
     });
 });
 
