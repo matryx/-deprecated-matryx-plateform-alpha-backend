@@ -11,7 +11,6 @@ api.get("/", function (req, next) {
 // Check if valid token
 api.get("/logged", function (req, next) {
     var token = req.query.token || "";
-    console.log("User checking token", token);
     sql.session(token, next);
 });
 
