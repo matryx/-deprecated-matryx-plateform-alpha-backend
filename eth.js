@@ -27,10 +27,13 @@ rpc.connect(connectionConfiguration, function (err) {
   else {
     console.log("Connected to Ethereum node!");
     eth.checkBalance("HOLYSHIT", function (a, b, c) {
-      console.log("TEST", "HOLYSHIT", a, b, c);
+      console.log("CheckBalance", "HOLYSHIT", a, b, c);
     });
     eth.checkBalance("0xe54007d15BF14E558D250538c84B8a2C5919bDe7", function (a, b, c) {
-      console.log("TEST", "0xe54007d15BF14E558D250538c84B8a2C5919bDe7", a, b, c);
+      console.log("CheckBalance", "0xe54007d15BF14E558D250538c84B8a2C5919bDe7", a, b, c);
+    });
+    eth.checkBalance("e54007d15BF14E558D250538c84B8a2C5919bDe7", function (a, b, c) {
+      console.log("CheckBalance", "e54007d15BF14E558D250538c84B8a2C5919bDe7", a, b, c);
     });
   }
 });
