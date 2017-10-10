@@ -7,5 +7,9 @@ module.exports = {
         password: '', // Those are dummy, replace by local DB info
         database: 'matryx-test', // Those are dummy, replace by local DB info
     },
+    geth: {
+        host: 'localhost', // Dummy local node to test
+        port: 8545, // Dummy local node to test
+    },
     port: 8081,
 };

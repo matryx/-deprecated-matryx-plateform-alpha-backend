@@ -11,6 +11,7 @@ api.get("/", function (req, next) {
 // Check if valid token
 api.get("/logged", function (req, next) {
     var token = req.query.token || "";
+    console.log("User checking token", token);
     sql.session(token, next);
 });
 
@@ -82,24 +83,33 @@ api.post("/auth", function (req, next) {
             return sql.makeToken(user.id, ip, agent, next);
         }
         // Signup if user does not exist
-        // TODO CHECK ETH BALANCE
-        sql.makeUser(key, function (success, results, error) {
+        eth.checkBalance(key, function (success, results, error) {
+            // Failure
             if (!success) {
-                return next(false, null, error);
+                return next(false, results, error);
             }
-            sql.getUser(key, function (success, results, error) {
-                // On failure
+            // Success, then create object
+            sql.makeUser(key, function (success, results, error) {
+                // Failure
                 if (!success) {
                     return next(false, null, error);
                 }
-                if (results.length <= 0) {
-                    return next(false, null, "user not created");
-                }
-                // Done
-                var user = results[0];
-                return sql.makeToken(user.id, ip, agent, next);
+                // Get the newly created user
+                sql.getUser(key, function (success, results, error) {
+                    // On failure
+                    if (!success) {
+                        return next(false, null, error);
+                    }
+                    if (results.length <= 0) {
+                        return next(false, null, "user not created");
+                    }
+                    // Done
+                    var user = results[0];
+                    return sql.makeToken(user.id, ip, agent, next);
+                });
             });
         });
+
     });
 });
 

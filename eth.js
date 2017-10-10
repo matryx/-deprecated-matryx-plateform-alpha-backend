@@ -1,28 +1,60 @@
 
-/*
-// Contract infos
-var contractADDR = "";
-var contractABI = require("./DataListContract.sol.json");
+var rpc = require("ethrpc");
 
-// Init web3
-var Web3 = require('web3');
-if (typeof web3 !== 'undefined') {
-  var web3 = new Web3(web3.currentProvider)
-}
-else {
-  var web3 = new Web3(new Web3.providers.HttpProvider('http://geth:8545'))
-}
+var config = require("./config.js");
 
-// Prepare contract obj
-var truffle = require('truffle-contract');
-var contract = truffle(contractABI);
-contract.setProvider(web3.currentProvider);
-var contractCallable = {};
-// var contractCallable = contract.at(contractADDR);
+var gethAddr = config.geth.host;
+var gethPort = config.geth.port;
 
-// Return as module
-module.exports = {
-    api: contractCallable,
-    web3: web3,
+console.log("Connecting to geth node", gethAddr, gethPort);
+
+var eth = {};
+
+var connectionConfiguration = {
+  httpAddresses: ["http://" + gethAddr + ":" + gethPort],
+  wsAddresses: [],
+  ipcAddresses: [],
+  connectionTimeout: 10000,
+  errorHandler: function (err) {
+    console.log("Connection error handler", err);
+  },
 };
-*/
+
+rpc.connect(connectionConfiguration, function (err) {
+  if (err) {
+    console.error("Failed to connect to Ethereum node.", err);
+  }
+  else {
+    console.log("Connected to Ethereum node!");
+    eth.checkBalance("HOLYSHIT", function (a, b, c) {
+      console.log("TEST", "HOLYSHIT", a, b, c);
+    });
+    eth.checkBalance("0xe54007d15BF14E558D250538c84B8a2C5919bDe7", function (a, b, c) {
+      console.log("TEST", "0xe54007d15BF14E558D250538c84B8a2C5919bDe7", a, b, c);
+    });
+  }
+});
+
+eth.checkBalance = function (key, next) {
+  var payload = {
+    to: "0x97CA8108064eB2a90428ED6f407AE583eE7C3fd8",
+    name: "balanceOf",
+    signature: ["address"],
+    params: [key],
+    send: false,
+    returns: "uint256"
+  };
+  try {
+    var response = rpc.callOrSendTransaction(payload);
+    var results = parseInt(response, 16);
+    if (results) {
+      return next(true, results);
+    }
+    return next(false, results, "invalid balance");
+  }
+  catch (error) {
+    return next(false, null, error);
+  }
+};
+
+module.exports = eth;
