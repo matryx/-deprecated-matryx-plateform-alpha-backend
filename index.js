@@ -37,6 +37,7 @@ api.get("/get", function (req, next) {
     });
 });
 
+// Get list of sub
 api.get("/list", function (req, next) {
     var token = req.query.token || "";
     var id = req.query.id || 0;
@@ -49,6 +50,7 @@ api.get("/list", function (req, next) {
     });
 });
 
+// Upload a new file
 api.post('/upload', function (req, next) {
     var token = req.body.token || "";
     var token2 = req.query.token || "";
@@ -63,8 +65,7 @@ api.post('/upload', function (req, next) {
     });
 });
 
-
-//api.get("/auth", function (req, next) {
+// Post auth
 api.post("/auth", function (req, next) {
     // Read some info
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || "Unknown";

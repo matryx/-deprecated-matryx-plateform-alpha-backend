@@ -1,4 +1,5 @@
 
+var BigNumber = require('bignumber.js');
 var rpc = require("ethrpc");
 
 var config = require("./config.js");
@@ -19,45 +20,78 @@ var connectionConfiguration = {
     console.log("Connection error handler", err);
   },
 };
-
 rpc.connect(connectionConfiguration, function (err) {
   if (err) {
     console.error("Failed to connect to Ethereum node.", err);
   }
   else {
     console.log("Connected to Ethereum node!");
-    eth.checkBalance("HOLYSHIT", function (a, b, c) {
-      console.log("CheckBalance", "HOLYSHIT", a, b, c);
-    });
-    eth.checkBalance("0xe54007d15BF14E558D250538c84B8a2C5919bDe7", function (a, b, c) {
-      console.log("CheckBalance", "0xe54007d15BF14E558D250538c84B8a2C5919bDe7", a, b, c);
-    });
-    eth.checkBalance("e54007d15BF14E558D250538c84B8a2C5919bDe7", function (a, b, c) {
-      console.log("CheckBalance", "e54007d15BF14E558D250538c84B8a2C5919bDe7", a, b, c);
-    });
+    eth.debugStates();
+    /*
+    var blockStream = rpc.getBlockStream();
+    blockStream.subscribeToOnBlockAdded(function (block) {
+      console.log("Found new block", block);
+    })
+    blockStream.subscribeToOnLogAdded(function (log) {
+      console.log("Found new log", log);
+    })
+    */
   }
 });
 
-eth.checkBalance = function (key, next) {
+eth.balanceOfErc20 = function (contract, address, next) {
   var payload = {
-    to: "0x97CA8108064eB2a90428ED6f407AE583eE7C3fd8",
+    to: contract,
     name: "balanceOf",
     signature: ["address"],
-    params: [key],
+    params: [address],
     send: false,
     returns: "uint256"
   };
   try {
     var response = rpc.callOrSendTransaction(payload);
-    var results = parseInt(response, 16);
-    if (results) {
-      return next(true, results);
-    }
-    return next(false, results, "invalid balance");
+    return next(true, response);
   }
   catch (error) {
     return next(false, null, error);
   }
+};
+
+eth.debugStates = function () {
+  var states = {
+    "syncing": rpc.eth.syncing(),
+    "block": parseInt(rpc.eth.blockNumber(), 16),
+    //"accounts": rpc.eth.accounts(),
+    //"coinbase": rpc.eth.coinbase(),
+    //"compilers": rpc.eth.getCompilers(),
+    "peers": parseInt(rpc.net.peerCount(), 16),
+    "version": rpc.net.version(),
+    "listening": rpc.net.listening(),
+  };
+  for (var key in states) {
+    console.log("Current state", key, states[key]);
+  }
+};
+
+eth.checkBalance = function (key, next) {
+  var mtxContract = "0x0af44e2784637218dd1d32a322d44e603a8f0c6a";
+  var mtxAddress = key;
+  eth.balanceOfErc20(mtxContract, mtxAddress, function (success, results, error) {
+    // Failure
+    if (!success) {
+      return next(false, results, error);
+    }
+    var balanceMin = new BigNumber(0);
+    var balanceValue = new BigNumber(results);
+    var balanceCheck = balanceValue.greaterThan(balanceMin);
+    // No mtx token available
+    if (!balanceCheck) {
+      return next(false, balanceValue, "invalid balance");
+    }
+    // Success
+    console.log("Valid balance", mtxAddress, balanceValue.toString());
+    return next(true, balanceValue);
+  });
 };
 
 module.exports = eth;
