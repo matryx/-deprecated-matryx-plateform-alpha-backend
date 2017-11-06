@@ -14,6 +14,31 @@ api.get("/logged", function (req, next) {
     sql.session(token, next);
 });
 
+api.get("/v1/tournaments", function (req, next) {
+    console.log(req.query);
+    var objectReturned = {
+        "tournaments": 
+        [
+        {
+          "address": "0xb794f5ea0ba39494ce839613fffba74279579268",
+          "title": "A Cure for the Zika Virus",
+          "bounty": 100
+      },
+      {
+          "address": "0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e",
+          "title": "A Solution to Global Warming",
+          "bounty": 50
+      },
+      {
+          "address": "0x53d284357ec70ce289d6d64134dfac8e511c8a3d",
+          "title": "The Perfect Battery",
+          "bounty": 80
+      }
+      ]
+  }
+    return next(true, objectReturned);
+});
+
 // Count all submissions
 api.get("/count", function (req, next) {
     var token = req.query.token || "";
