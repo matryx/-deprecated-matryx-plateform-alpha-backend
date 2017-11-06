@@ -15,29 +15,65 @@ api.get("/logged", function (req, next) {
 });
 
 api.get("/v1/tournaments", function (req, next) {
-    console.log(req.query);
-    var objectReturned = {
-        "tournaments": 
-        [
+    var tournaments = 
         {
-          "address": "0xb794f5ea0ba39494ce839613fffba74279579268",
-          "title": "A Cure for the Zika Virus",
-          "bounty": 100
-      },
-      {
-          "address": "0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e",
-          "title": "A Solution to Global Warming",
-          "bounty": 50
-      },
-      {
-          "address": "0x53d284357ec70ce289d6d64134dfac8e511c8a3d",
-          "title": "The Perfect Battery",
-          "bounty": 80
-      }
-      ]
-  }
-    return next(true, objectReturned);
+            "tournaments": 
+            [
+            {
+              "address": "0xb794f5ea0ba39494ce839613fffba74279579268",
+              "title": "A Cure for the Zika Virus",
+              "bounty": 100
+            },
+            {
+              "address": "0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e",
+              "title": "A Solution to Global Warming",
+              "bounty": 50
+            },
+            {
+              "address": "0x53d284357ec70ce289d6d64134dfac8e511c8a3d",
+              "title": "The Perfect Battery",
+              "bounty": 80
+            }
+            ]
+        }
+    return next(true, tournaments);
 });
+
+api.get("/v1/tournament", function (req, next) {
+    if(!req.query.id)
+    {
+        return next(false, null);
+    }
+
+    var tournament = 
+    {
+        "0x53d284357ec70ce289d6d64134dfac8e511c8a3d":
+        {
+            "title": "A Cure for the Zika Virus",
+            "bounty": 100,
+            "description": "(description of this tournament).",
+            "submissions" :
+            [
+            {
+                "address": "0x1b3cb81e51011b549d78bf720b0d924ac763a7c2",
+                "title": "Novel Approach to Tyro3 Receptor Inhibition"
+                
+            },
+            {
+                "address": "0x51f9c432a4e59ac86282d6adab4c2eb8919160eb",
+                "title": "Mertk Receptor RNA Transfection"
+            },
+            {
+                "address": "0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98",
+                "title": "Axl Receptor Blocking Techniques"
+            }
+            ]
+        }
+    }
+
+    return next(true, tournament);
+});
+
 
 // Count all submissions
 api.get("/count", function (req, next) {
