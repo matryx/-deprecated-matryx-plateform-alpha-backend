@@ -45,10 +45,9 @@ api.get("/v1/tournament", function (req, next) {
         return next(false, null);
     }
 
-    var tournament = 
+    var tournamentID = req.query.id;
+    var tournamentContent = 
     {
-        "0x53d284357ec70ce289d6d64134dfac8e511c8a3d":
-        {
             "title": "A Cure for the Zika Virus",
             "bounty": 100,
             "description": "(description of this tournament).",
@@ -69,7 +68,9 @@ api.get("/v1/tournament", function (req, next) {
             }
             ]
         }
-    }
+
+    var tournament = {}
+    tournament[tournamentID] = tournamentContent
 
     return next(true, tournament);
 });
@@ -128,7 +129,7 @@ api.post("/v1/submit", function(req, next)
     }
 
     // Add submission to IPFS node here!
-
+    
     // Make CreateSubmission Contract call here!
 
     return next(true, submission);
