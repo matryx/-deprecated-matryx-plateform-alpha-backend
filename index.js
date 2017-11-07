@@ -107,6 +107,34 @@ api.get("/v1/submission", function(req, next) {
     return next(true, submission);
 });
 
+api.post("/v1/submit", function(req, next)
+{
+    if(!req.body)
+    {
+        return next(false, null);
+    }
+
+    var title = req.body.title;
+    var references = req.body.references;
+    var contributors = req.body.contributors;
+    var submissionBody = req.body.submissionBody;
+
+    var submission = 
+    {
+        "title": title,
+        "references": references,
+        "contributors": contributors,
+        "submissionBody": submissionBody
+    }
+
+    // Add submission to IPFS node here!
+
+    // Make CreateSubmission Contract call here!
+
+    return next(true, submission);
+
+});
+
 // Count all submissions
 api.get("/count", function (req, next) {
     var token = req.query.token || "";
