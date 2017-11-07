@@ -80,30 +80,29 @@ api.get("/v1/submission", function(req, next) {
     {
         return next(false, null);
     }
-
-    var submission = 
+    var submissionID = req.query.id;
+    var submissionBody = 
     {
-          "0x1b3cb81e51011b549d78bf720b0d924ac763a7c2":
-          {
-            "title" : "Novel Approach to Tyro3 Receptor Inhibition",
-            "references":
-            [
-            "0x3d2e397f94e415d7773e72e44d5b5338a99e77d9",
-            "0xc257274276a4e539741ca11b590b9447b26a8051",
-            "0xf0160428a8552ac9bb7e050d90eeade4ddd52843"
-            ],
-            "contributors":
-            [
-            "0x5ffc99b5b23c5ab8f463f6090342879c286a29be",
-            "0xb8487eed31cf5c559bf3f4edd166b949553d0d11",
-            "0xe853c56864a2ebe4576a807d26fdc4a0ada51919"
-            ],
-            "body":
-            {
-
-            }
+        "title" : "Novel Approach to Tyro3 Receptor Inhibition",
+        "references":
+        [
+        "0x3d2e397f94e415d7773e72e44d5b5338a99e77d9",
+        "0xc257274276a4e539741ca11b590b9447b26a8051",
+        "0xf0160428a8552ac9bb7e050d90eeade4ddd52843"
+        ],
+        "contributors":
+        [
+        "0x5ffc99b5b23c5ab8f463f6090342879c286a29be",
+        "0xb8487eed31cf5c559bf3f4edd166b949553d0d11",
+        "0xe853c56864a2ebe4576a807d26fdc4a0ada51919"
+        ],
+        "body":
+        {
+            "Items":["{\"rangeKeys\":[\"t\",\"u\",\"v\",\"w\"],\"rangePairs\":[{\"min\":{\"exclusive\":false,\"rawText\":\"0\"},\"max\":{\"exclusive\":false,\"rawText\":\"0\"}},{\"min\":{\"exclusive\":false,\"rawText\":\"0\"},\"max\":{\"exclusive\":false,\"rawText\":\"pi\"}},{\"min\":{\"exclusive\":false,\"rawText\":\"0\"},\"max\":{\"exclusive\":false,\"rawText\":\"2*pi\"}},{\"min\":{\"exclusive\":false,\"rawText\":\"0\"},\"max\":{\"exclusive\":false,\"rawText\":\"0\"}}],\"ExpressionKeys\":[0,1,2],\"ExpressionValues\":[\"(2*cos(u)*cos(v))^3\",\"(2*sin(u)*cos(v))^3\",\"(2*sin(v))^3\"]}"]
         }
     }
+    var submission = {}
+    submission[submissionID] = submissionBody
 
     return next(true, submission);
 });
