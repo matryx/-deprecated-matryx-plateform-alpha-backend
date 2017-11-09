@@ -15,28 +15,188 @@ api.get("/logged", function (req, next) {
 });
 
 api.get("/v1/tournaments", function (req, next) {
-    var tournaments = 
+
+    var page = req.query.page;
+    if(page != null)
+    {
+        if(page == 0)
         {
-            "tournaments": 
-            [
-            {
-              "address": "0xb794f5ea0ba39494ce839613fffba74279579268",
-              "title": "A Cure for the Zika Virus",
-              "bounty": 100
-            },
-            {
-              "address": "0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e",
-              "title": "A Solution to Global Warming",
-              "bounty": 50
-            },
-            {
-              "address": "0x53d284357ec70ce289d6d64134dfac8e511c8a3d",
-              "title": "The Perfect Battery",
-              "bounty": 80
-            }
-            ]
+            var tournaments = 
+                [
+                {
+                  "address": "0xb794f5ea0ba39494ce839613fffba74279579268",
+                  "title": "A Cure for the Zika Virus",
+                  "bounty": 100
+                },
+                {
+                  "address": "0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e",
+                  "title": "A Solution to Global Warming",
+                  "bounty": 50
+                },
+                {
+                  "address": "0x53d284357ec70ce289d6d64134dfac8e511c8a3d",
+                  "title": "The Perfect Battery",
+                  "bounty": 80
+                },
+                {
+                  "address": "0xc257274276a4e539741ca11b590b9447b26a8051",
+                  "title": "A Fourth Bounty",
+                  "bounty": 10
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "A Fifth Bounty",
+                  "bounty": 10491
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "A Sixth Bounty",
+                  "bounty": 1927
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "A Seventh Bounty",
+                  "bounty": 9
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "A Eighth Bounty",
+                  "bounty": 6
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "A Ninth Bounty",
+                  "bounty": 123
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "A Tenth Bounty",
+                  "bounty": 123127391
+                }
+                ]
+
+            return next(true, tournaments);
         }
-    return next(true, tournaments);
+        else if(page == 1)
+        {
+            var tournaments = 
+            [
+                {
+                  "address": "0xb794f5ea0ba39494ce839613fffba74279579268",
+                  "title": "An Eleventh Bounty",
+                  "bounty": 100
+                },
+                {
+                  "address": "0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e",
+                  "title": "A Twelvth Bounty",
+                  "bounty": 50
+                },
+                {
+                  "address": "0x53d284357ec70ce289d6d64134dfac8e511c8a3d",
+                  "title": "A Thirteenth Bounty",
+                  "bounty": 80
+                },
+                {
+                  "address": "0xc257274276a4e539741ca11b590b9447b26a8051",
+                  "title": "A Fourteenth Bounty",
+                  "bounty": 10
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "A Fifteenth Bounty",
+                  "bounty": 10491
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "A Sixteenth Bounty",
+                  "bounty": 1927
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "A Seventeenth Bounty",
+                  "bounty": 9
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "An Eighteenth Bounty",
+                  "bounty": 6
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "A Ninteenth Bounty",
+                  "bounty": 123
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "A Twentyth Bounty",
+                  "bounty": 123127391
+                }
+            ]
+
+            return next(true, tournaments);
+        }
+        else
+        {
+            var tournaments = 
+            [
+                {
+                  "address": "0xb794f5ea0ba39494ce839613fffba74279579268",
+                  "title": "Bounty",
+                  "bounty": 1
+                },
+                {
+                  "address": "0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e",
+                  "title": "Bounty",
+                  "bounty": 2
+                },
+                {
+                  "address": "0x53d284357ec70ce289d6d64134dfac8e511c8a3d",
+                  "title": "Bounty",
+                  "bounty": 3
+                },
+                {
+                  "address": "0xc257274276a4e539741ca11b590b9447b26a8051",
+                  "title": "Bounty",
+                  "bounty": 4
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "Bounty",
+                  "bounty": 5
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "Bounty",
+                  "bounty": 6
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "Bounty",
+                  "bounty": 7
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "Bounty",
+                  "bounty": 8
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "Bounty",
+                  "bounty": 9
+                },
+                {
+                  "address": "  0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
+                  "title": "Bounty",
+                  "bounty": 10
+                }
+            ]
+
+            return next(true, tournaments);
+        }
+    }
+
+
+    
 });
 
 api.get("/v1/tournament", function (req, next) {
