@@ -14,6 +14,10 @@ api.get("/logged", function (req, next) {
     sql.session(token, next);
 });
 
+api.get("/v1/ready", function (req, next) {
+    return next(false, null);
+});
+
 api.get("/v1/tournaments", function (req, next) {
 
     var page = req.query.page;
@@ -27,23 +31,23 @@ api.get("/v1/tournaments", function (req, next) {
                     [
                         {
                           "address": "0xb794f5ea0ba39494ce839613fffba74279579268",
-                          "title": "A Cure for the Zika Virus",
-                          "bounty": 1
+                          "title": "Suborbital Spaceplane Airfoil Design",
+                          "bounty": 1000
                         },
                         {
                           "address": "0xe853c56864a2ebe4576a807d26fdc4a0ada51919",
-                          "title": "A Solution to Global Warming",
-                          "bounty": 2
+                          "title": "Cure for the Zika Virus",
+                          "bounty": 920000
                         },
                         {
                           "address": "0x281055afc982d96fab65b3a49cac8b878184cb16",
-                          "title": "The Perfect Battery",
-                          "bounty": 3
+                          "title": "Synthetic Carboxysome Production Method",
+                          "bounty": 819200
                         },
                         {
                           "address": "0x6f46cf5569aefa1acc1009290c8e043747172d89",
-                          "title": "A Fourth Bounty",
-                          "bounty": 4
+                          "title": "Dry Battery Cell Structure",
+                          "bounty": 20000
                         },
                         {
                           "address": "0x90e63c3d53e0ea496845b7a03ec7548b70014a91",
@@ -61,7 +65,7 @@ api.get("/v1/tournaments", function (req, next) {
                           "bounty": 7
                         },
                         {
-                          "address": "0xab7c74abc0c4d48d1bdad5dcb26153fc8780f83e",
+                          "address": "0xf4b51b14b9ee30dc37ec970b50a486f37686e2a8",
                           "title": "A Eighth Bounty",
                           "bounty": 8
                         },
@@ -224,23 +228,27 @@ api.get("/v1/tournament", function (req, next) {
         {
             var tournamentContent = 
             {
-                "title": "A Cure for the Zika Virus",
+                "title": "Suborbital Spaceplane Airfoil Design",
                 "bounty": 100,
-                "description": "(description of this tournament).",
+                "description": "The process of airfoil design proceeds from a knowledge of \
+                the relationship between geometry and pressure distribution. Airfoil design is \
+                application specific. Some airfoils need only to minimize drag force while others \
+                need to maximize lift. As our aircraft needs to reach upper atmosphere as quickly as \
+                possible, this tournament focuses on the latter; See Section IV for technical specifications.",
                 "submissions" :
                 [
                 {
                     "address": "0xa0e239b0abf4582366adaff486ee268c848c4409",
-                    "title": "Novel Approach to Tyro3 Receptor Inhibition"
+                    "title": "Lift-to-drag maximization for single airfoil at M = 0.63"
                     
                 },
                 {
                     "address": "0x851b7f3ab81bd8df354f0d7640efcd7288553419",
-                    "title": "Mertk Receptor RNA Transfection"
+                    "title": "High Lift, Low Aspect Ratio Airfoil"
                 },
                 {
                     "address": "0x32be343b94f860124dc4fee278fdcbd38c102d88",
-                    "title": "Axl Receptor Blocking Techniques"
+                    "title": "Low Reynolds Number Airfoil"
                 }
                 ]
             }
@@ -254,8 +262,8 @@ api.get("/v1/tournament", function (req, next) {
         {
             var tournamentContent = 
             {
-                "title": "A Cure for the Zika Virus",
-                "bounty": 100,
+                "title": "The Perfect Battery",
+                "bounty": 3,
                 "description": "(description of this tournament).",
                 "submissions" :
                 [
@@ -284,8 +292,8 @@ api.get("/v1/tournament", function (req, next) {
         {
             var tournamentContent = 
             {
-                "title": "A Cure for the Zika Virus",
-                "bounty": 100,
+                "title": "The Perfect Battery",
+                "bounty": 3,
                 "description": "(description of this tournament).",
                 "submissions" :
                 [
