@@ -15,7 +15,7 @@ api.get("/logged", function (req, next) {
 });
 
 api.get("/v1/ready", function (req, next) {
-    return next(false, null);
+    return next(true, null);
 });
 
 api.get("/v1/tournaments", function (req, next) {
@@ -365,6 +365,7 @@ api.post("/v1/submit", function(req, next)
         return next(false, null);
     }
 
+    var tournament = req.body.tournament;
     var title = req.body.title;
     var references = req.body.references;
     var contributors = req.body.contributors;
@@ -372,6 +373,7 @@ api.post("/v1/submit", function(req, next)
 
     var submission = 
     {
+        "tournament": tournament,
         "title": title,
         "references": references,
         "contributors": contributors,
