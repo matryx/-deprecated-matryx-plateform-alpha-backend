@@ -110,21 +110,18 @@ matryxContract.events.QueryPerformed(null, (error, event) => { console.log(event
 .on('data', (event) => {
   var queryID = event.returnValues[0];
   var address = event.returnValues[1];
-  console.log("BALANCE QUERY RECEIVED.");
   
-  eth.checkBalance("0xc6f8fbbb52b680b7d7919abe1bc825b44ec7fc13", (success, results, error) => {
+  eth.checkBalance(address, (success, results, error) => {
     // Failure
     if (!success) {
-      //return next(false, results, error);
+      console.log(error)
     }
     // Success, send balance back to MatryxPlatform
     matryxContract.methods.storeQueryResponse(queryID, results);
-    return next();
   });
   
 }).on('changed', function(event){
     // remove event from local database
   }).on('error', function(error){
-    return next(false, null);
 
 });
