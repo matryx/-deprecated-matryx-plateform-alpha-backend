@@ -1,6 +1,11 @@
 
+const Web3 = require("web3");
+
 var BigNumber = require('bignumber.js');
 var rpc = require("ethrpc");
+
+var websocketProvider = new Web3.providers.WebsocketProvider('ws://localhost:8547');
+var web3 = new Web3(websocketProvider);
 
 var config = require("./config.js");
 
@@ -8,6 +13,10 @@ var gethAddr = config.geth.host;
 var gethPort = config.geth.port;
 
 console.log("Connecting to geth node", gethAddr, gethPort);
+
+var matryxContractABI = [{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"tournamentList","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_queryID","type":"uint256"},{"name":"_response","type":"bytes32"}],"name":"storeQueryResponse","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"tournamentId","type":"uint256"}],"name":"submissionCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"idx","type":"uint256"}],"name":"tournamentByIndex","outputs":[{"name":"","type":"uint256"},{"name":"","type":"string"},{"name":"","type":"string"},{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"tournamentId","type":"uint256"}],"name":"tournamentByAddress","outputs":[{"name":"","type":"uint256"},{"name":"","type":"string"},{"name":"","type":"string"},{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"tournamentCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"tournaments","outputs":[{"name":"id","type":"uint256"},{"name":"title","type":"string"},{"name":"description","type":"string"},{"name":"bounty","type":"uint256"},{"name":"exists","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"tournamentId","type":"uint256"},{"name":"title","type":"string"},{"name":"body","type":"string"},{"name":"references","type":"string"},{"name":"contributors","type":"string"}],"name":"createSubmission","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"toIgnore","type":"bytes32"}],"name":"prepareBalance","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getOwner","outputs":[{"name":"_deployer","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"tournamentId","type":"uint256"},{"name":"idx","type":"uint256"}],"name":"submissionByIndex","outputs":[{"name":"","type":"uint256"},{"name":"","type":"string"},{"name":"","type":"string"},{"name":"","type":"string"},{"name":"","type":"string"},{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_query","type":"bytes32"}],"name":"Query","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"tournamentId","type":"uint256"},{"name":"submissionId","type":"uint256"}],"name":"submissionByAddress","outputs":[{"name":"","type":"uint256"},{"name":"","type":"string"},{"name":"","type":"string"},{"name":"","type":"string"},{"name":"","type":"string"},{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"title","type":"string"},{"name":"description","type":"string"},{"name":"bounty","type":"uint256"}],"name":"createTournament","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"id","type":"uint256"},{"indexed":false,"name":"sender","type":"address"}],"name":"QueryPerformed","type":"event"}];
+var matryxPlatformAddress = '0xc6f8fbbb52b680b7d7919abe1bc825b44ec7fc13';
+var matryxContract = new web3.eth.Contract(matryxContractABI, matryxPlatformAddress);
 
 var eth = {};
 
@@ -20,6 +29,7 @@ var connectionConfiguration = {
     console.log("Connection error handler", err);
   },
 };
+
 rpc.connect(connectionConfiguration, function (err) {
   if (err) {
     console.error("Failed to connect to Ethereum node.", err);
@@ -95,3 +105,28 @@ eth.checkBalance = function (key, next) {
 };
 
 module.exports = eth;
+
+matryxContract.events.QueryPerformed(null, (error, event) => { console.log(event); })
+.on('data', (event) => {
+  var queryID = event.returnValues[0];
+  var address = event.returnValues[1];
+  console.log("BALANCE QUERY RECEIVED.");
+  
+  eth.checkBalance("0xc6f8fbbb52b680b7d7919abe1bc825b44ec7fc13", function (success, results, error) {
+    // Failure
+    if (!success) {
+      //return next(false, results, error);
+    }
+    // Success, send balance back to MatryxPlatform
+    matryxContract.methods.storeQueryResponse().call(queryID, results, {from: '0x592a4a1288082592e494b2067d52e56f795a2cae', gas: 18000000000})
+    .then((result) => {
+      console.log(result);
+    });
+  });
+  
+}).on('changed', function(event){
+    // remove event from local database
+  }).on('error', function(error){
+    return next(false, null);
+
+});

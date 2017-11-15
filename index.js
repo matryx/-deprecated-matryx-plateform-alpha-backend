@@ -2,6 +2,10 @@
 var eth = require("./eth.js");
 var sql = require("./sql.js");
 var api = require("./api.js");
+var Readable = require('stream').Readable
+const IPFS = require('ipfs');
+
+const node = new IPFS();
 
 // Say hello
 api.get("/", function (req, next) {
@@ -15,7 +19,7 @@ api.get("/logged", function (req, next) {
 });
 
 api.get("/v1/ready", function (req, next) {
-    return next(true, null);
+    return next(false, null);
 });
 
 api.get("/v1/tournaments", function (req, next) {
@@ -230,11 +234,7 @@ api.get("/v1/tournament", function (req, next) {
             {
                 "title": "Suborbital Spaceplane Airfoil Design",
                 "bounty": 100,
-                "description": "The process of airfoil design proceeds from a knowledge of \
-                the relationship between geometry and pressure distribution. Airfoil design is \
-                application specific. Some airfoils need only to minimize drag force while others \
-                need to maximize lift. As our aircraft needs to reach upper atmosphere as quickly as \
-                possible, this tournament focuses on the latter; See Section IV for technical specifications.",
+                "description": "The process of airfoil design proceeds from a knowledge of the relationship between geometry and pressure distribution. Airfoil design is application specific. Some airfoils need only to minimize drag force while others need to maximize lift. As our aircraft needs to reach upper atmosphere as quickly as possible, this tournament focuses on the latter; See Section IV for technical specifications.",
                 "submissions" :
                 [
                 {
@@ -365,7 +365,7 @@ api.post("/v1/submit", function(req, next)
         return next(false, null);
     }
 
-    var tournament = req.body.tournament;
+    var tournamentID = req.body.tournamentID;
     var title = req.body.title;
     var references = req.body.references;
     var contributors = req.body.contributors;
@@ -373,18 +373,33 @@ api.post("/v1/submit", function(req, next)
 
     var submission = 
     {
-        "tournament": tournament,
+        "tournamentID": tournamentID,
         "title": title,
         "references": references,
         "contributors": contributors,
         "submissionBody": submissionBody
     }
 
-    // Add submission to IPFS node here!
-    
-    // Make CreateSubmission Contract call here!
 
-    return next(true, submission);
+    const bufferedSubmission = Buffer.from(JSON.stringify(submission))
+    const readableSubmission = new Readable()
+    readableSubmission.push(bufferedSubmission);
+    readableSubmission.push(null);
+
+    // Add submission to IPFS!
+      const submissionArray = []
+      const submission_pathContentPair = {
+        path: 'matryxSubmission.txt',
+        content: readableSubmission
+      }
+
+      submissionArray.push(submission_pathContentPair)
+      console.log(submissionArray);
+
+      node.files.add(submissionArray, (err, res) => {
+        console.log(res[0])
+        return next(true, res[0].multihash.toString('hex'));
+      })
 
 });
 
