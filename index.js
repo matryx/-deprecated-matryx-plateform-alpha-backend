@@ -234,7 +234,13 @@ api.get("/v1/tournament", function (req, next) {
             {
                 "title": "Suborbital Spaceplane Airfoil Design",
                 "bounty": 100,
-                "description": "The process of airfoil design proceeds from a knowledge of the relationship between geometry and pressure distribution. Airfoil design is application specific. Some airfoils need only to minimize drag force while others need to maximize lift. As our aircraft needs to reach upper atmosphere as quickly as possible, this tournament focuses on the latter; See Section IV for technical specifications.",
+                "description": "The process of airfoil design proceeds from a knowledge\
+                 of the relationship between geometry and pressure distribution. Airfoil \
+                 design is application specific. Some airfoils need only to minimize drag \
+                 force while others need to maximize lift. As our aircraft needs to reach upper\
+                  atmosphere as quickly as possible, this tournament focuses on the latter. \
+                  Create a parameterization for an airfoil that maximizes lift for a chance\
+                  to win 100 MTX.",
                 "submissions" :
                 [
                 {
