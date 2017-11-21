@@ -2,6 +2,8 @@ var BigNumber = require('bignumber.js');
 var rpc = require("ethrpc");
 const Web3 = require("web3");
 var websocketProvider = new Web3.providers.WebsocketProvider('ws://matryx-alpha-private-chain:8547');
+// var websocketProvider = new Web3.providers.WebsocketProvider('ws://13.57.143.35:8547');
+
 var web3 = new Web3(websocketProvider);
 
 var config = require("./config.js");
@@ -107,6 +109,8 @@ matryxContract.events.QueryPerformed(null, (error, event) => { console.log(event
 .on('data', (event) => {
   var queryID = event.returnValues[0];
   var address = event.returnValues[1];
+
+  console.log("got queryID.");
   
   eth.checkBalance(address, (success, results, error) => {
     // Failure

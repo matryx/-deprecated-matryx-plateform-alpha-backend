@@ -1,8 +1,4 @@
-FROM node:argon
-
-
-# RUN apt-get install -y g++
-# RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 50
+FROM node:boron
 
 RUN apt-get update -y
 RUN apt-get install -y build-essential
@@ -13,7 +9,7 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 COPY package.json /usr/src/app/
-RUN npm --unsafe-perm install
+RUN npm install
 
 # Bundle app source
 COPY . /usr/src/app
