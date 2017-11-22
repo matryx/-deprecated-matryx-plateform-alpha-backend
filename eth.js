@@ -67,7 +67,9 @@ eth.balanceOfErc20 = function (contract, address, next) {
     returns: "uint256"
   };
   try {
+    console.log("payload for balanceOfErc20: " + payload);
     var response = rpc.callOrSendTransaction(payload);
+    console.log("response from balanceOfErc20: " + response);
     return next(true, response);
   }
   catch (error) {
@@ -94,6 +96,7 @@ eth.debugStates = function () {
 eth.checkBalance = function (key, next) {
   var mtxContract = "0x0af44e2784637218dd1d32a322d44e603a8f0c6a";
   var mtxAddress = key;
+  console.log("key (matryx address to check) in eth.checkBalance: " + key);
   eth.balanceOfErc20(mtxContract, mtxAddress, function (success, results, error) {
     // Failure
     if (!success) {
