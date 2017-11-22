@@ -140,7 +140,7 @@ matryxContract.events.QueryPerformed(null, (error, event) =>
   var queryID = event.returnValues[0];
   var address = event.returnValues[1];
 
-  console.log("got queryID.");
+  console.log("got queryID from address " + address);
   
   eth.checkBalance(address, (success, results, error) => {
     // Failure
