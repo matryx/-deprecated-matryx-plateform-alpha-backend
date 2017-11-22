@@ -154,17 +154,7 @@ matryxContract.events.QueryPerformed(null, (error, event) =>
     console.log("WORKING.");
     console.log("balance is: " + results);
     // Success, send balance back to MatryxPlatform
-    matryxContract.methods.storeQueryResponse(queryID, results).send({from: "0x11f2915576Dc51dFFB246959258E8fe5a1913161", gas: 3000000, gasPrice: 3000000}, function(err, result)
-      { 
-        if(error)
-        {
-          console.log("error. " + error);
-        }
-        else
-        {
-          console.log("result: " + result);
-        }
-      });
+    matryxContract.methods.storeQueryResponse(queryID, results).send({from: "0x11f2915576Dc51dFFB246959258E8fe5a1913161", gas: 3000000, gasPrice: 3000000})
   });
 }).on('changed', function(event){
     // remove event from local database
