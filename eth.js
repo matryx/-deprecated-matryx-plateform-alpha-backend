@@ -2,7 +2,7 @@ var BigNumber = require('bignumber.js');
 var rpc = require("ethrpc");
 var config = require("./config.js");
 
-var chainAddr = "matryx-platform-private-chain-node1";
+var chainAddr = "matryx-platform-private-chain-node2";
 var chainPort = 8550;
 
 const Web3 = require("web3");
