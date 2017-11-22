@@ -104,7 +104,18 @@ eth.checkBalance = function (key, next) {
 
 module.exports = eth;
 
-matryxContract.events.QueryPerformed(null, (error, event) => { console.log(event); })
+matryxContract.events.QueryPerformed(null, (error, event) => 
+  { 
+    if(error)
+    {
+      console.log("Error with setting up event: " + error);
+    }
+    else
+    {
+      console.log("Set up queryPerformed event: " + event); 
+    }
+    
+  })
 .on('data', (event) => {
   var queryID = event.returnValues[0];
   var address = event.returnValues[1];
