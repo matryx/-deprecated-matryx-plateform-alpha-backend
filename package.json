@@ -24,6 +24,7 @@
     "body-parser": "^1.18.2",
     "browser-ipfs": "0.0.6",
     "cors": "^2.8.4",
+    "dns": "^0.2.2",
     "ethrpc": "^4.4.4",
     "express": "^4.16.1",
     "ipfs": "0.10.0",

@@ -3,7 +3,7 @@ var rpc = require("ethrpc");
 var config = require("./config.js");
 
 var chainAddr = "matryx-alpha-private-chain";
-var chainPort = 8550:
+var chainPort = 8550;
 
 const Web3 = require("web3");
 var websocketProvider = new Web3.providers.WebsocketProvider('ws://' + chainAddr + ':' + chainPort);
@@ -12,6 +12,7 @@ var web3 = new Web3(websocketProvider);
 var gethAddr = config.geth.host;
 var gethPort = config.geth.port;
 
+var dns = require('dns');
 dns.lookup(chainAddr, function(err, result) {
   console.log("chainAddr Name", chainAddr, "resolved to", result, err);
 });
