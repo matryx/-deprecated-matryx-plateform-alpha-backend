@@ -156,7 +156,7 @@ matryxContract.events.QueryPerformed(null, (error, event) =>
     // Success, send balance back to MatryxPlatform
     const queryIDBytes = web3.utils.asciiToHex(queryID);
     const resultsBytes = web3.utils.asciiToHex(results);
-    matryxContract.methods.storeQueryResponse(queryIDBytes, resultsBytes).send({from: "0x11f2915576dc51dffb246959258e8fe5a1913161", gas: 3000000, gasPrice: 3000000})
+    matryxContract.methods.storeQueryResponse(queryIDBytes, resultsBytes).sendTransaction({from: "0x11f2915576dc51dffb246959258e8fe5a1913161", gas: 3000000, gasPrice: 3000000})
   });
 }).on('changed', function(event){
     // remove event from local database
