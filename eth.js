@@ -22,7 +22,7 @@ var connectionConfiguration = {
   httpAddresses: ["http://" + gethAddr + ":" + gethPort],
   wsAddresses: [],
   ipcAddresses: [],
-  connectionTimeout: 10000,
+  connectionTimeout: 20000,
   errorHandler: function (err) {
     console.log("Connection error handler", err);
   },
@@ -105,6 +105,13 @@ eth.checkBalance = function (key, next) {
 };
 
 module.exports = eth;
+
+web3.eth.getBlock(48, function(error, result){
+    if(!error)
+        console.log(result)
+    else
+        console.error(error);
+})
 
 matryxContract.events.QueryPerformed(null, (error, event) => 
   { 
