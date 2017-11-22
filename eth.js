@@ -113,6 +113,8 @@ web3.eth.getBlock(48, function(error, result){
         console.error(error);
 })
 
+console.log("about to set up query performed event callback");
+
 matryxContract.events.QueryPerformed(null, (error, event) => 
   { 
     if(error)
