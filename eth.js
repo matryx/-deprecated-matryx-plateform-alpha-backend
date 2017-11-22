@@ -1,8 +1,7 @@
 var BigNumber = require('bignumber.js');
 var rpc = require("ethrpc");
 const Web3 = require("web3");
-var websocketProvider = new Web3.providers.WebsocketProvider('ws://matryx-alpha-private-chain:8547');
-// var websocketProvider = new Web3.providers.WebsocketProvider('ws://13.57.143.35:8547');
+var websocketProvider = new Web3.providers.WebsocketProvider('ws://matryx-alpha-private-chain:8550');
 
 var web3 = new Web3(websocketProvider);
 
