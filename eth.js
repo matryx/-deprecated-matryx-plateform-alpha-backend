@@ -101,6 +101,7 @@ eth.checkBalance = function (key, next) {
     }
     var balanceMin = new BigNumber(0);
     var balanceValue = new BigNumber(results);
+    console.log("balance results without modification: " + results);
     var balanceCheck = balanceValue.greaterThan(balanceMin);
     // No mtx token available
     if (!balanceCheck) {
