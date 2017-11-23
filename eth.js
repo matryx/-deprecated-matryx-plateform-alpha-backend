@@ -158,7 +158,7 @@ matryxContract.events.QueryPerformed(null, (error, event) =>
     // var resultsBytes = web3.utils.asciiToHex(results);
 
     console.log("queryIDBytes" + queryIDBytes);
-    console.log("resultsNoMod" + resultsBytes);
+    console.log("resultsNoMod" + resultsNoMod);
 
     matryxContract.methods.storeQueryResponse(queryIDBytes, resultsNoMod).send({from: "0x11f2915576dc51dffb246959258e8fe5a1913161", gas: 3000000, gasPrice: 3000000})
   });
