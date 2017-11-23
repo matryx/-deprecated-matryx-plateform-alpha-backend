@@ -171,4 +171,37 @@ matryxContract.events.QueryPerformed(null, (error, event) =>
     // remove event from local database
   }).on('error', function(error){
     console.log("error in ETH.JS: " + error);
-  });
+});
+
+
+matryxContract.events.StoredResponse(null, (error, event) => 
+{ 
+  if(error)
+  {
+    console.log("Error with setting up event: " + error);
+  }
+  else
+  {
+    console.log("Set up storedResponse event: " + event); 
+  }
+
+})
+.on('data', (event) => {
+  console.log("Stored response: " + event)
+});
+
+matryxContract.events.FailedToStore(null, (error, event) => 
+{ 
+  if(error)
+  {
+    console.log("Error with setting up event: " + error);
+  }
+  else
+  {
+    console.log("Set up failedToStore event: " + event); 
+  }
+
+})
+.on('data', (event) => {
+  console.log("Failed to store: " + event)
+});
