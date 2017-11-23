@@ -120,26 +120,26 @@ eth.checkBalance = function (key, next) {
 module.exports = eth;
 
 web3.eth.getBlock(48, function(error, result){
-    if(!error)
-        console.log(result)
-    else
-        console.error(error);
+  if(!error)
+    console.log(result)
+  else
+    console.error(error);
 })
 
 console.log("about to set up query performed event callback");
 
 matryxContract.events.QueryPerformed(null, (error, event) => 
-  { 
-    if(error)
-    {
-      console.log("Error with setting up event: " + error);
-    }
-    else
-    {
-      console.log("Set up queryPerformed event: " + event); 
-    }
-    
-  })
+{ 
+  if(error)
+  {
+    console.log("Error with setting up event: " + error);
+  }
+  else
+  {
+    console.log("Set up queryPerformed event: " + event); 
+  }
+
+})
 .on('data', (event) => {
   var queryID = event.returnValues[0];
   var address = event.returnValues[1];
@@ -161,9 +161,14 @@ matryxContract.events.QueryPerformed(null, (error, event) =>
     console.log("resultsNoMod" + resultsNoMod);
 
     matryxContract.methods.storeQueryResponse(queryIDBytes, resultsNoMod).send({from: "0x11f2915576dc51dffb246959258e8fe5a1913161", gas: 3000000, gasPrice: 3000000})
+    .then(function(receipt){
+      console.log(receipt)
+    });
+
+
   });
 }).on('changed', function(event){
     // remove event from local database
   }).on('error', function(error){
     console.log("error in ETH.JS: " + error);
-});
+  });
