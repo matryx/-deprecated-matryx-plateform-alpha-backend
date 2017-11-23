@@ -478,7 +478,7 @@ api.post("/auth", function (req, next) {
             return sql.makeToken(user.id, ip, agent, next);
         }
         // Signup if user does not exist
-        eth.checkBalance(key, function (success, results, error) {
+        eth.checkBalance(key, function (success, results, resultsNoMod, error) {
             // Failure
             if (!success) {
                 return next(false, results, error);

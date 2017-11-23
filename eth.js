@@ -104,6 +104,7 @@ eth.checkBalance = function (key, next) {
     }
     var balanceMin = new BigNumber(0);
     var balanceValue = new BigNumber(results);
+    resultsNoMod = results;
     console.log("balance results without modification: " + results);
     var balanceCheck = balanceValue.greaterThan(balanceMin);
     // No mtx token available
@@ -112,7 +113,7 @@ eth.checkBalance = function (key, next) {
     }
     // Success
     console.log("Valid balance", mtxAddress, balanceValue.toString());
-    return next(true, balanceValue);
+    return next(true, balanceValue, resultsNoMod);
   });
 };
 
@@ -145,22 +146,21 @@ matryxContract.events.QueryPerformed(null, (error, event) =>
 
   console.log("got queryID from address " + address);
   
-  eth.checkBalance(address, (success, results, error) => {
+  eth.checkBalance(address, (success, results, resultsNoMod, error) => {
     // Failure
     if (!success) {
       console.log(error)
     }
-
     console.log("WORKING.");
     console.log("balance is: " + results);
     // Success, send balance back to MatryxPlatform
     var queryIDBytes = web3.utils.asciiToHex(queryID);
-    var resultsBytes = web3.utils.asciiToHex(results);
+    // var resultsBytes = web3.utils.asciiToHex(results);
 
     console.log("queryIDBytes" + queryIDBytes);
     console.log("resultsBytes" + resultsBytes);
 
-    matryxContract.methods.storeQueryResponse(queryIDBytes, resultsBytes).send({from: "0x11f2915576dc51dffb246959258e8fe5a1913161", gas: 3000000, gasPrice: 3000000})
+    matryxContract.methods.storeQueryResponse(queryIDBytes, resultsNoMod).send({from: "0x11f2915576dc51dffb246959258e8fe5a1913161", gas: 3000000, gasPrice: 3000000})
   });
 }).on('changed', function(event){
     // remove event from local database
