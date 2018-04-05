@@ -180,5 +180,3 @@ matryxContract.events.QueryPerformed(null, (error, event) =>
   }).on('error', function(error){
     console.log("error in ETH.JS: " + error);
   });
-
-matryxContract.events.
