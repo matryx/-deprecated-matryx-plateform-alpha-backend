@@ -158,13 +158,13 @@ matryxContract.events.QueryPerformed(null, (error, event) =>
     console.log("WORKING.");
     console.log("balance is: " + results);
     // Success, send balance back to MatryxPlatform
-    var queryIDBytes = web3.utils.asciiToHex(queryID);
+    // var queryIDBytes = web3.utils.asciiToHex(queryID);
     // var resultsBytes = web3.utils.asciiToHex(results);
 
-    console.log("queryIDBytes" + queryIDBytes);
-    console.log("resultsNoMod" + resultsNoMod);
+    console.log("queryID" + queryID);
+    console.log("results" + results);
 
-    matryxContract.methods.storeQueryResponse(queryID, resultsNoMod).send({from: "0x11f2915576dc51dffb246959258e8fe5a1913161", gas: 3000000, gasPrice: 3000000})
+    matryxContract.methods.storeQueryResponse(queryID, results).send({from: "0x11f2915576dc51dffb246959258e8fe5a1913161", gas: 3000000, gasPrice: 3000000})
     .then(function(receipt){
       console.log(receipt)
       // if(receipt.logs.length == 1)
