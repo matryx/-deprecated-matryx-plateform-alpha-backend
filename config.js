@@ -8,7 +8,7 @@ module.exports = {
         ssl: true,
     },
     geth: {
-        host: 'mainnet.infura.io/eJw9pnKHGF0oSVO7cYJJ',
+        host: 'mainnet.infura.io/metamask',
         port: 8545,
     },
     port: 8081,
