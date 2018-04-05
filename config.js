@@ -8,12 +8,9 @@ module.exports = {
         ssl: true,
     },
     geth: {
-        host: 'matryx-plateform-alpha-geth',
+        host: 'mainnet.infura.io/metamask',
         port: 8545,
     },
-    // geth: {
-    //     host: '13.57.143.35',
-    //     port: 8545,
-    // },
     port: 8081,
 };
+

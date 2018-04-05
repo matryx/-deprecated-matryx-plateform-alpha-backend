@@ -1,5 +1,5 @@
 # Install prod config
-cp ../config/config-prod-backend.js config.js
+# cp ../config/config-prod-backend.js config.js
 # Build docker
 docker build -t matryx-plateform-alpha-backend:oracle .
 # Tag docker
