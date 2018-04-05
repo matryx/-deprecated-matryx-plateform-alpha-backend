@@ -73,7 +73,7 @@ eth.balanceOfErc20 = function (contract, address, next) {
   try {
     console.log("payload for balanceOfErc20: " + payload);
     var response = rpc.callOrSendTransaction(payload);
-    console.log("response from balanceOfErc20: " + response);
+    console.log("response from balanceOfErc20: " + response.valueOf());
     return next(true, response);
   }
   catch (error) {
