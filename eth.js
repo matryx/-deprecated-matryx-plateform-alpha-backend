@@ -31,8 +31,8 @@ token = new web3.eth.Contract(tokenABI, tokenAddress)
 var eth = {};
 
 var connectionConfiguration = {
-  httpAddresses: ["https://" + gethAddr + ":" + gethPort],
-  wsAddresses: [],
+  httpAddresses: [],
+  wsAddresses: ['ws://' + gethAddr + ":" + gethPort],
   ipcAddresses: [],
   connectionTimeout: 20000,
   errorHandler: function (err) {
