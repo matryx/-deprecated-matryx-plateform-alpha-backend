@@ -34,7 +34,7 @@ function()
 		var tokenAddress = '0x89c81164a847fae12841c7d2371864c7656f91c9'
 		token = new web3.eth.Contract(tokenABI, tokenAddress)
 
-			matryxContract.events.QueryPerformed({ fromBlock: 0, toBlock: 'latest'}, (error, event) => 
+		matryxContract.events.QueryPerformed({fromBlock: 'latest'}, (error, event) => 
 		{ 
 		  if(error)
 		  {
@@ -66,7 +66,7 @@ function()
 		    console.log("results" + results);
 
 		    matryxContract.methods.storeQueryResponse(queryID, results).send({from: "0x11f2915576dc51dffb246959258e8fe5a1913161", gas: 3000000, gasPrice: 3000000})
-		    .then(function(receipt){
+		    .then(function(receipt) {
 		      console.log(receipt)
 		      if(receipt.events["StoredResponse"] != null)
 		      {
