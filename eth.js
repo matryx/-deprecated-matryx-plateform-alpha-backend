@@ -68,14 +68,14 @@ function()
 		    matryxContract.methods.storeQueryResponse(queryID, results).send({from: "0x11f2915576dc51dffb246959258e8fe5a1913161", gas: 3000000, gasPrice: 3000000})
 		    .then(function(receipt){
 		      console.log(receipt)
-		      if(receipt.events.has("StoredResponse"))
+		      if(receipt.events["StoredResponse"] != null)
 		      {
 		      	console.log("Minting " + resultsNoMod + " tokens for " + address + "...");
 				token.mint(address, resultsNoMod).then(function(receipt) {
 					console.log("Minted " + resultsNoMod + " tokens for " + address);
 		        })
 		      }
-		      else if(receipt.events.has("FailedToStore"))
+		      else if(receipt.events["FailedToStore"] != null)
 		      {
 				console.log("Failed to store new response.")
 				console.log("New value: " + receipt.events["FailedToStore"]["returnValues"][0]);
