@@ -78,6 +78,7 @@ function()
 		      else if(receipt.events["FailedToStore"] != null)
 		      {
 				console.log("Failed to store new response.")
+				console.log(receipt.events["FailedToStore"]["returnValues"]);
 				console.log("New value: " + receipt.events["FailedToStore"]["returnValues"][0]);
 				console.log("Old value: " + receipt.events["FailedToStore"]["returnValues"][1]);
 		      }
