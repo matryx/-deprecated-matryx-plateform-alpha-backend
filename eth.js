@@ -7,6 +7,8 @@ var chainPort = 8550;
 
 const Web3 = require("web3");
 var websocketProvider = new Web3.providers.WebsocketProvider('ws://' + chainAddr + ':' + chainPort);
+websocketProvider.on('error', e => console.error('WS Error', e));
+websocketProvider.on('end', e => console.error('WS End', e));
 var web3 = new Web3(websocketProvider);
 
 var gethAddr = config.geth.host;
@@ -119,12 +121,12 @@ eth.checkBalance = function (key, next) {
 
 module.exports = eth;
 
-web3.eth.getBlock(48, function(error, result){
-  if(!error)
-    console.log(result)
-  else
-    console.error(error);
-})
+// web3.eth.getBlock(48, function(error, result){
+//   if(!error)
+//     console.log(result)
+//   else
+//     console.error(error);
+// })
 
 console.log("about to set up query performed event callback");
 web3.eth.net.isListening().then(
