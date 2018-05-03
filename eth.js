@@ -130,7 +130,7 @@ module.exports = eth;
 // })
 
 console.log("about to set up query performed event callback");
-web3.eth.net.isListening().then(
+Web3.eth.net.isListening().then(
 	function() 
    	{
    		matryxContract.events.QueryPerformed({ fromBlock: 0, toBlock: 'latest'}, (error, event) => 
