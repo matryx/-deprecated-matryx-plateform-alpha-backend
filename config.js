@@ -8,7 +8,7 @@ module.exports = {
         ssl: true,
     },
     geth: {
-        host: 'mainnet.infura.io',
+        host: 'mainnet.infura.io/eJw9pnKHGF0oSVO7cYJJ',
         port: 8545,
     },
     port: 8081,
