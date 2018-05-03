@@ -139,6 +139,8 @@ matryxContract.events.QueryPerformed(null, (error, event) =>
     console.log("Set up queryPerformed event: " + event); 
   }
 
+  console.log("Please print this.");
+
 })
 .on('data', (event) => {
   var queryID = event.returnValues[0];
