@@ -128,7 +128,7 @@ web3.eth.getBlock(48, function(error, result){
 
 console.log("about to set up query performed event callback");
 
-matryxContract.events.QueryPerformed(null, (error, event) => 
+matryxContract.events.QueryPerformed({ fromBlock: 0, toBlock: 'latest'}, (error, event) => 
 { 
   if(error)
   {
@@ -178,3 +178,25 @@ matryxContract.events.QueryPerformed(null, (error, event) =>
   }).on('error', function(error){
     console.log("error in ETH.JS: " + error);
   });
+
+  matryxContract.allEvents({ fromBlock: 0, toBlock: 'latest'}, 
+  	function(error, event)
+  	{ 
+  		console.log(event); 
+  	})
+	.on('data', function(event){
+    console.log(event); // same results as the optional callback above
+	})
+	.on('changed', function(event){
+    // remove event from local database
+	})
+	.on('error', console.error);
+
+matryxContract.getPastEvents('QueryPerformed', { fromBlock: 0, toBlock: 'latest'}, 
+	function(error, events)
+	{ 
+		console.log(events);
+	})
+	.then(function(events){
+    	console.log(events) // same results as the optional callback above
+	});
