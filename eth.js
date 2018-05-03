@@ -179,7 +179,7 @@ matryxContract.events.QueryPerformed({ fromBlock: 0, toBlock: 'latest'}, (error,
     console.log("error in ETH.JS: " + error);
   });
 
-  matryxContract.allEvents({ fromBlock: 0, toBlock: 'latest'}, 
+  matryxContract.events.allEvents({ fromBlock: 0, toBlock: 'latest'}, 
   	function(error, event)
   	{ 
   		console.log(event); 
