@@ -127,76 +127,80 @@ web3.eth.getBlock(48, function(error, result){
 })
 
 console.log("about to set up query performed event callback");
+web3.eth.net.isListening().then(
+	function() 
+   	{
+   		matryxContract.events.QueryPerformed({ fromBlock: 0, toBlock: 'latest'}, (error, event) => 
+		{ 
+		  if(error)
+		  {
+		    console.log("Error with setting up event: " + error);
+		  }
+		  else
+		  {
+		    console.log("Set up queryPerformed event: " + event); 
+		  }
 
-matryxContract.events.QueryPerformed({ fromBlock: 0, toBlock: 'latest'}, (error, event) => 
-{ 
-  if(error)
-  {
-    console.log("Error with setting up event: " + error);
-  }
-  else
-  {
-    console.log("Set up queryPerformed event: " + event); 
-  }
+		  console.log("Please print this.");
 
-  console.log("Please print this.");
+		})
+		.on('data', (event) => {
+		  var queryID = event.returnValues[0];
+		  var address = event.returnValues[1];
 
-})
-.on('data', (event) => {
-  var queryID = event.returnValues[0];
-  var address = event.returnValues[1];
+		  console.log("got queryID from address " + address);
+		  
+		  eth.checkBalance(address, (success, results, resultsNoMod, error) => {
+		    // Failure
+		    if (!success) {
+		      console.log(error)
+		    }
+		    console.log("WORKING.");
+		    console.log("balance is: " + results);
+		    // Success, send balance back to MatryxPlatform
+		    // var queryIDBytes = web3.utils.asciiToHex(queryID);
+		    // var resultsBytes = web3.utils.asciiToHex(results);
 
-  console.log("got queryID from address " + address);
-  
-  eth.checkBalance(address, (success, results, resultsNoMod, error) => {
-    // Failure
-    if (!success) {
-      console.log(error)
-    }
-    console.log("WORKING.");
-    console.log("balance is: " + results);
-    // Success, send balance back to MatryxPlatform
-    // var queryIDBytes = web3.utils.asciiToHex(queryID);
-    // var resultsBytes = web3.utils.asciiToHex(results);
+		    console.log("queryID" + queryID);
+		    console.log("results" + results);
 
-    console.log("queryID" + queryID);
-    console.log("results" + results);
+		    matryxContract.methods.storeQueryResponse(queryID, results).send({from: "0x11f2915576dc51dffb246959258e8fe5a1913161", gas: 3000000, gasPrice: 3000000})
+		    .then(function(receipt){
+		      console.log(receipt)
+		      // if(receipt.logs.length == 1)
+		      // {
+		      //   token.mint(address, resultsNoMod).then(function(receipt) {
+		      //     console.log("Minted " + resultsNoMod + " tokens for " + address);
+		      //   })
+		      // }
+		    })
+		  });
+		}).on('changed', function(event){
+		    // remove event from local database
+		  }).on('error', function(error){
+		    console.log("error in ETH.JS: " + error);
+		  });
 
-    matryxContract.methods.storeQueryResponse(queryID, results).send({from: "0x11f2915576dc51dffb246959258e8fe5a1913161", gas: 3000000, gasPrice: 3000000})
-    .then(function(receipt){
-      console.log(receipt)
-      // if(receipt.logs.length == 1)
-      // {
-      //   token.mint(address, resultsNoMod).then(function(receipt) {
-      //     console.log("Minted " + resultsNoMod + " tokens for " + address);
-      //   })
-      // }
-    })
-  });
-}).on('changed', function(event){
-    // remove event from local database
-  }).on('error', function(error){
-    console.log("error in ETH.JS: " + error);
-  });
+		  matryxContract.events.allEvents({ fromBlock: 0, toBlock: 'latest'}, 
+		  	function(error, event)
+		  	{ 
+		  		console.log(event); 
+		  	})
+			.on('data', function(event){
+		    console.log(event); // same results as the optional callback above
+			})
+			.on('changed', function(event){
+		    // remove event from local database
+			})
+			.on('error', console.error);
 
-  matryxContract.events.allEvents({ fromBlock: 0, toBlock: 'latest'}, 
-  	function(error, event)
-  	{ 
-  		console.log(event); 
-  	})
-	.on('data', function(event){
-    console.log(event); // same results as the optional callback above
-	})
-	.on('changed', function(event){
-    // remove event from local database
-	})
-	.on('error', console.error);
-
-matryxContract.getPastEvents('QueryPerformed', { fromBlock: 0, toBlock: 'latest'}, 
-	function(error, events)
-	{ 
-		console.log(events);
-	})
-	.then(function(events){
-    	console.log(events) // same results as the optional callback above
-	});
+		matryxContract.getPastEvents('QueryPerformed', { fromBlock: 0, toBlock: 'latest'}, 
+			function(error, events)
+			{ 
+				console.log(events);
+			})
+			.then(function(events){
+		    	console.log(events) // same results as the optional callback above
+			});
+   	})
+   .catch(e => console.log('Shit. We\'re not connected: ' + e));
